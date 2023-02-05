@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { format } from 'date-fns'
-import { DayWrapper } from "./styles/Calendar.styled";
+import { DayWrapper, DayHeader, EventWrapper, CircleDay, EventName, EventTime } from "./styles/Calendar.styled";
 
 
 const Day = ({day, monthEvents, activeDate}) => {
@@ -10,27 +10,28 @@ const Day = ({day, monthEvents, activeDate}) => {
         const events = monthEvents.filter(
             (evt) => format(new Date(evt.commit.committer.date), "P") === format(day, "P")
         );
-        monthEvents.forEach(
-            evt => 
-                format(new Date(evt.commit.committer.date), "P") === format(day, "P") ?
-                console.log(format(new Date(evt.commit.committer.date), "P"))
-                : null
-        );
-        setDayEvents(events);
+        setDayEvents(events);   
     },[monthEvents, activeDate])
 
-    return (  
+    return (
         <DayWrapper>
-            <div>
-                {format(day, "d")}
-            </div>
-            <div>
-                {dayEvents.length !== 0 ?  dayEvents[0].commit.message: ""}
-            </div>
-            <div>
-            {dayEvents.length !== 0 ?  format(new Date(dayEvents[0].commit.committer.date), "pp") : ""}
-            </div>
-            
+            <DayHeader>
+                <CircleDay>
+                    {format(day, "d")}
+                </CircleDay>
+            </DayHeader>
+            {
+                dayEvents.length !== 0 ?
+                <EventWrapper>
+                    <EventName style={{fontWeight: 'bold', }}>
+                        {dayEvents[0].commit.message}
+                    </EventName>
+                    <EventTime>
+                        {format(new Date(dayEvents[0].commit.committer.date), "p")}
+                    </EventTime>
+                </EventWrapper>
+                :<></>
+            }
         </DayWrapper>
     );
 }

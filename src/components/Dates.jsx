@@ -1,7 +1,7 @@
 import { addDays, endOfDay, endOfMonth, format, formatISO, startOfMonth, startOfWeek } from "date-fns";
 import { endOfWeek } from "date-fns/esm";
 import React, { useEffect, useState } from "react";
-import { WeekGrid } from "./styles/Calendar.styled";
+import { WeekGrid, DayWrapper } from "./styles/Calendar.styled";
 import axios from "axios";
 import Day from "./Day";
 
@@ -18,22 +18,15 @@ const Dates = ({activeDate, setActiveDate}) => {
     useEffect(() => {
         axios({
             method: "get",
-            url: `repos/krubograh/react-calendar/commits?since=${startMonth}&until=${formatISO(endOfDay(endMonth))}&per_page=2`,
+            url: `repos/acheong08/ChatGPT/commits?since=${startMonth}&until=${formatISO(endOfDay(endMonth))}&per_page=100`,
             headers: {
               "accept": "application/vnd.github+json",
             },
         }).then((response) =>{
             message = response.data[0].commit.message
             setMonthEvents(response.data);
-            console.log(message);
-            console.log('Uspješan GET')
         }).catch((err) => {
-            console.log('Neuspješan GET');
         })
-    }, [activeDate]);
-
-    useEffect(() => {
-        console.log("Promijenio se datum");
     }, [activeDate]);
 
     const getWeek = (date) => {
@@ -42,8 +35,8 @@ const Dates = ({activeDate, setActiveDate}) => {
         for (let day = 0; day < 7; day++){
             week.push(
                 (currentDate >= startMonth && currentDate <= endMonth) ? 
-                <Day day={currentDate} monthEvents={monthEvents} activeDate={activeDate}></Day>
-                :<div></div>
+                <Day key={'day_'+currentDate} day={currentDate} monthEvents={monthEvents} activeDate={activeDate}></Day>
+                :<DayWrapper></DayWrapper>
             );
             currentDate = addDays(currentDate, 1);
         }
@@ -51,15 +44,15 @@ const Dates = ({activeDate, setActiveDate}) => {
     }
 
     const getDates = () => {
-        let curentDate = startDate;
+        let currentDate = startDate;
         let dates = []; 
-        while (curentDate < endDate){
+        while (currentDate < endDate){
             dates.push(
-                <WeekGrid>{getWeek(curentDate)}</WeekGrid>
+                <WeekGrid key={'week_'+currentDate} >{getWeek(currentDate)}</WeekGrid>
             );
-            curentDate = addDays(curentDate, 7);
+            currentDate = addDays(currentDate, 7);
         }
-        return <div>{dates}</div>
+        return <div key={'datumi'}>{dates}</div>
     }
 
     return (  

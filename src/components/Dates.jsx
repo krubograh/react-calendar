@@ -1,4 +1,4 @@
-import { addDays, endOfDay, endOfMonth, format, formatISO, startOfMonth, startOfWeek } from "date-fns";
+import { addDays, endOfDay, endOfMonth, formatISO, startOfMonth, startOfWeek } from "date-fns";
 import { endOfWeek } from "date-fns/esm";
 import React, { useEffect, useState } from "react";
 import { WeekGrid, DayWrapper } from "./styles/Calendar.styled";
@@ -8,12 +8,10 @@ import Day from "./Day";
 
 const Dates = ({activeDate, setActiveDate}) => {
     const [monthEvents, setMonthEvents] = useState([]);
-
     const startMonth = startOfMonth(activeDate)
     const startDate = startOfWeek(startMonth, {weekStartsOn : 1});
     const endMonth = endOfMonth(activeDate);
     const endDate = endOfWeek(endMonth, {weekStartsOn : 1});
-    let message = '';
 
     useEffect(() => {
         axios({
@@ -23,7 +21,6 @@ const Dates = ({activeDate, setActiveDate}) => {
               "accept": "application/vnd.github+json",
             },
         }).then((response) =>{
-            message = response.data[0].commit.message
             setMonthEvents(response.data);
         }).catch((err) => {
         })

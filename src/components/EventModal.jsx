@@ -2,6 +2,7 @@ import React from "react";
 import { EventModalButton, EventModalWrapper, EventModalHeader, EventModalBody, EventModalLink } from "./styles/EventModal.styled";
 import CloseIcon from '@mui/icons-material/Close';
 import LaunchIcon from '@mui/icons-material/Launch';
+import { format, parseISO } from 'date-fns'
 
 
 const EventModal = ({activeEvent, setShowEventModal}) => {
@@ -21,7 +22,7 @@ const EventModal = ({activeEvent, setShowEventModal}) => {
             </EventModalHeader>
             <EventModalBody>
                 <h2 style={{color: '#009595'}}>{activeEvent.commit.message}</h2>
-                <div>Time:   {activeEvent.commit.author.date}</div>
+                <div>Time:   { format(parseISO(activeEvent.commit.author.date), 'd.M.y. pp')}</div>
                 <div>Author:   <EventModalLink href={activeEvent.author.html_url}>{activeEvent.commit.author.name}</EventModalLink></div>
             </EventModalBody>
         </EventModalWrapper>

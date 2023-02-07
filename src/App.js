@@ -5,7 +5,7 @@ import axios from 'axios';
 import { Route, Routes } from 'react-router-dom';
 
 function App() {
-  axios.defaults.baseURL = "https://api.github.com/";
+  axios.defaults.baseURL = 'https://api.github.com/';
 
   return (
     <Routes>

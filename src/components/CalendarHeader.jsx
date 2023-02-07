@@ -1,6 +1,6 @@
 import React from 'react';
 import { addMonths, format, subMonths } from 'date-fns'
-import { CalendarHeaderWrapper, CalendarHeaderButton } from "./styles/Calendar.styled";
+import { CalendarHeaderWrapper, CalendarHeaderButton } from './styles/Calendar.styled';
 import { useNavigate } from 'react-router-dom';
 
 
@@ -14,10 +14,10 @@ const CalendarHeader = ({activeDate, setActiveDate}) => {
 
     return (
         <CalendarHeaderWrapper>
-            {format(activeDate, "MMMM yyyy")}
+            {format(activeDate, 'MMMM yyyy')}
             <div>
-                <CalendarHeaderButton onClick={() => navigate('/'+dateToUrl(subMonths(activeDate, 1)))}>&lt;</CalendarHeaderButton>
-                <CalendarHeaderButton onClick={() => navigate('/'+dateToUrl(addMonths(activeDate, 1)))}>&gt;</CalendarHeaderButton>
+                <CalendarHeaderButton onClick={() => navigate(`/${dateToUrl(subMonths(activeDate, 1))}`)}>&lt;</CalendarHeaderButton>
+                <CalendarHeaderButton onClick={() => navigate(`/${dateToUrl(addMonths(activeDate, 1))}`)}>&gt;</CalendarHeaderButton>
             </div>
         </CalendarHeaderWrapper>
     );

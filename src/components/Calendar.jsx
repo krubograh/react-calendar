@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import { parse, isMatch, isValid } from 'date-fns'
 import CalendarHeader from './CalendarHeader'
 import WeekDays from './WeekDays';
 import Dates from './Dates';
-import { CalendarWrapper } from "./styles/Calendar.styled";
-import { useParams, useNavigate } from 'react-router-dom';
+import { CalendarWrapper, DatesWrapper } from './styles/Calendar.styled';
 
 
 const Calendar = () => {
@@ -18,14 +18,12 @@ const Calendar = () => {
             if (isValid(newDate)) {
                 setActiveDate(newDate);
             } else {
-                navigate("/")
+                navigate('/')
             }
         } else {
-            navigate("/")
+            navigate('/')
         }
     }
-    
-
 
     useEffect(() => {
         checkUrl(urlDate);
@@ -34,13 +32,13 @@ const Calendar = () => {
     
     console.log(urlDate);
     return (
-        <React.Fragment>
-            <CalendarHeader activeDate={activeDate} setActiveDate={setActiveDate}/>
             <CalendarWrapper>
-                <WeekDays activeDate={activeDate} setActiveDate={setActiveDate}/>
-                <Dates activeDate={activeDate} setActiveDate={setActiveDate}/>
+                <CalendarHeader activeDate={activeDate} setActiveDate={setActiveDate}/>
+                <DatesWrapper>
+                    <WeekDays activeDate={activeDate} setActiveDate={setActiveDate}/>
+                    <Dates activeDate={activeDate} setActiveDate={setActiveDate}/>
+                </DatesWrapper>
             </CalendarWrapper>
-        </React.Fragment>
     );
 }
  

@@ -1,14 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 import { format } from 'date-fns'
-import { DayWrapper, DayHeader, EventWrapper, CircleDay, EventName, EventTime } from "./styles/Calendar.styled";
+import Event  from './Event'
+import { DayWrapper, DayHeader, CircleDay } from "./styles/Day.styled";
 
 
-const Day = ({day, monthEvents, activeDate}) => {
+const Day = ({currentDate, monthEvents, activeDate, setActiveEvent, setShowEventModal}) => {
     const [dayEvents, setDayEvents] = useState([]);
+    const [day, setDay] = useState(currentDate);
 
     useEffect(() => {
         const events = monthEvents.filter(
-            (evt) => format(new Date(evt.commit.committer.date), "P") === format(day, "P")
+            (evt) => format(new Date(evt.commit.committer.date), 'P') === format(day, 'P')
         );
         setDayEvents(events);   
     },[monthEvents, activeDate])
@@ -17,19 +19,12 @@ const Day = ({day, monthEvents, activeDate}) => {
         <DayWrapper>
             <DayHeader>
                 <CircleDay>
-                    {format(day, "d")}
+                    {format(day, 'd')}
                 </CircleDay>
             </DayHeader>
             {
                 dayEvents.length !== 0 ?
-                <EventWrapper>
-                    <EventName style={{fontWeight: 'bold', }}>
-                        {dayEvents[0].commit.message}
-                    </EventName>
-                    <EventTime>
-                        {format(new Date(dayEvents[0].commit.committer.date), "p")}
-                    </EventTime>
-                </EventWrapper>
+                <Event dayEvent={dayEvents[0]} setActiveEvent={setActiveEvent} setShowEventModal={setShowEventModal}/>
                 :<></>
             }
         </DayWrapper>

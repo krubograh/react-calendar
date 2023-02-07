@@ -1,6 +1,6 @@
-import { addDays, format, startOfWeek } from "date-fns";
-import React from "react";
-import { WeekDaysWrapper, WeekGrid } from "./styles/Calendar.styled";
+import { addDays, format, startOfWeek } from 'date-fns';
+import React from 'react';
+import { WeekDaysWrapper, WeekGrid } from './styles/Day.styled';
 
 const WeekDays = ({activeDate, setActiveDate}) => {
     const weekStart = startOfWeek(activeDate, {weekStartsOn : 1})
